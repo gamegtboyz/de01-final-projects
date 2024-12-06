@@ -7,9 +7,9 @@ token = "qMLbbltM4PxnOZ6W4yZgE3QIO"
 
 # define parameters
 params = {
-    '$limit' : 10000,
+    '$limit' : 100000,
     '$offset' : 0,
-    '$where' : 'crash_date >= "2024-01-01T00:00:00"',
+    '$where' : 'crash_date >= "2020-01-01T00:00:00"',
     '$order' : 'crash_date DESC',
 }
 
