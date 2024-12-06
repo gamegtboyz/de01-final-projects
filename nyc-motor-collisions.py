@@ -9,7 +9,7 @@ token = "qMLbbltM4PxnOZ6W4yZgE3QIO"
 params = {
     '$limit' : 100000,
     '$offset' : 0,
-    '$where' : 'crash_date >= "2022-01-01T00:00:00"',
+    '$where' : 'crash_date >= "2023-01-01T00:00:00"',
     '$order' : 'crash_date DESC',
 }
 
