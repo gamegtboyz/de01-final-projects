@@ -9,7 +9,7 @@ token = "qMLbbltM4PxnOZ6W4yZgE3QIO"
 params = {
     '$limit' : 10000,
     '$offset' : 0,
-    '$where' : 'crash_date >= "2024-01-01T00:00:00"',
+    '$where' : 'crash_date >= "2022-01-01T00:00:00"',
     '$order' : 'crash_date DESC',
 }
 
@@ -42,4 +42,4 @@ while True:
 # convert the downloaded data from json to DataFrame, then export it into .csv files
 df = pd.DataFrame(all_data)
 df.to_csv('nyc-collisions.csv',index = False)
-print(f"{i} rows of dataset were downloaded successfully.")
+print(f"{i} page(s) of dataset were downloaded successfully.")
