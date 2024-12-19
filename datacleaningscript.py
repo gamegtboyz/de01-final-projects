@@ -13,3 +13,7 @@ data.dropna(subset = ['contributing_factor_vehicle_1','vehicle_type_code1','lati
 
 # drop the observations with 0,0 coordinates
 data.drop(data[(data['latitude'] == 0) & (data['longitude'] == 0)].index, inplace = True)
+
+# exported the cleaned data onto new .csv files
+data.to_csv('nyc-collisions_1.csv',index = False)
+print(f"dataset was exported successfully.")
