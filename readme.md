@@ -23,6 +23,8 @@ For users who clone this repository with Docker Desktop installed, please use th
 
 In case of localhost:8080 doesn't load (this happended on my PC when reopen the computer), you could use theis following commands to troubleshoot the issues
 1. docker restart <webserver container NAMES>       # to restart the container
+
+in case of command per 1 doesn't work, please use the command 2., 3., and 4. respectively to reinitiate the airflow
 2. docker-compose down --volumes --remove-orphans
->> docker-compose up airflow-init
->> docker-compose up -d     # in case of restarting the container doesn't work, please use the following command to re-initiate the airflow.
+3. docker-compose up airflow-init
+4. docker-compose up -d
