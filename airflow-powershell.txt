@@ -1,0 +1,21 @@
+This is guide how to install Apache Airflow using Docker.
+1. Download Docker Desktop.
+2. Go to settings, enable WSL engine.
+3. Let Docker run at this point.
+4. Open your VScode. Direct to your working directory, then open the WSL terminal, and use the following command
+    - curl -LfO 'https://airflow.apache.org/docs/apache-airflow/2.10.4/docker-compose.yaml'
+    - mkdir -p ./dags ./logs ./plugins
+    - echo -e "AIRFLOW_UID=$(id -u)" > .env
+    - docker-compose up airflow-init
+    - docker-compose up
+    * at this point, you could access the webUI of Airflow using localhost:8080 (or other ports, as defined in .yaml file) using username == airflow, and password == airflow
+    * the current terminal will keep itself running, so further process with terminal, we should open the new terminal instead.
+6. To create new users, please open the new termianal, as explained. then use the following bash command to create the new users
+    - docker exec -it <webserver-container-name> bash
+    - airflow users create \
+    > --username <username> \
+    > --firstname <firstname> \
+    > --lastname <lastname> \
+    > --role Admin \
+    > --email <email> \
+    > --password <password>
