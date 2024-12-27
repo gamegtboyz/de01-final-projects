@@ -1,6 +1,7 @@
 # import text and datetime library, we will use it for scheduling activities.
 import textwrap
 from datetime import datetime, timedelta
+import subprocess
 
 # import DAG
 from airflow.models.dag import DAG
@@ -18,15 +19,25 @@ with DAG (
         'email': ['test@airflow.com'],
         'email_on_failure': False,
         'email_on_retry': False,
-        'retries': 1,
+        'start_date': datetime(2024, 12, 28),
+        'schedule_interval': '0 11 * * *',   # run daily at noon (CET)
+        'retries': 10,
         'retry_delay': timedelta(minutes=1)
     }
 ) as dag:
 
     # set the tasks list
-    t1 = BashOperator(
-        task_id = 'test',
-        bash_command = 'echo "hello world"',
+    # define the function to execute a python scripts
+    # # t1 is an execution of download and cleanup file
+    def load_and_clean(**kwargs):
+        result = subprocess.run(['python','nyc-collisions-download-cleanup.py'],capture_output=True,text=True)
+        print(result.stdout)    # this line is to print script output
+        if result.returncode != 0:
+            raise Exception(f'Script failed with error: {result.stderr}')
+    
+    t1 = PythonOperator(
+        task_id = 'load-and-clean',
+        python_callable = load_and_clean,
         dag = dag
     )
 
