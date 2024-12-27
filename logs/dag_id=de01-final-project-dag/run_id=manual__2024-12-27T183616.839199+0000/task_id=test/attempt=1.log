@@ -1,0 +1,32 @@
+[2024-12-27T18:36:19.482+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2024-12-27T18:36:19.505+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: de01-final-project-dag.test manual__2024-12-27T18:36:16.839199+00:00 [queued]>
+[2024-12-27T18:36:19.518+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: de01-final-project-dag.test manual__2024-12-27T18:36:16.839199+00:00 [queued]>
+[2024-12-27T18:36:19.519+0000] {taskinstance.py:2866} INFO - Starting attempt 1 of 2
+[2024-12-27T18:36:19.540+0000] {taskinstance.py:2889} INFO - Executing <Task(BashOperator): test> on 2024-12-27 18:36:16.839199+00:00
+[2024-12-27T18:36:19.551+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:70: DeprecationWarning: This process (pid=257) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2024-12-27T18:36:19.554+0000] {standard_task_runner.py:72} INFO - Started process 259 to run task
+[2024-12-27T18:36:19.554+0000] {standard_task_runner.py:104} INFO - Running: ['***', 'tasks', 'run', 'de01-final-project-dag', 'test', 'manual__2024-12-27T18:36:16.839199+00:00', '--job-id', '4', '--raw', '--subdir', 'DAGS_FOLDER/dags.py', '--cfg-path', '/tmp/tmptlsrq7sq']
+[2024-12-27T18:36:19.555+0000] {standard_task_runner.py:105} INFO - Job 4: Subtask test
+[2024-12-27T18:36:19.625+0000] {task_command.py:467} INFO - Running <TaskInstance: de01-final-project-dag.test manual__2024-12-27T18:36:16.839199+00:00 [running]> on host 3382f7f7a84d
+[2024-12-27T18:36:19.741+0000] {taskinstance.py:3132} INFO - Exporting env vars: AIRFLOW_CTX_DAG_EMAIL='abejraputra@gmail.com' AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='de01-final-project-dag' AIRFLOW_CTX_TASK_ID='test' AIRFLOW_CTX_EXECUTION_DATE='2024-12-27T18:36:16.839199+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2024-12-27T18:36:16.839199+00:00'
+[2024-12-27T18:36:19.743+0000] {logging_mixin.py:190} INFO - Task instance is in running state
+[2024-12-27T18:36:19.744+0000] {logging_mixin.py:190} INFO -  Previous state of the Task instance: queued
+[2024-12-27T18:36:19.746+0000] {logging_mixin.py:190} INFO - Current task name:test state:running start_date:2024-12-27 18:36:19.506547+00:00
+[2024-12-27T18:36:19.748+0000] {logging_mixin.py:190} INFO - Dag name:de01-final-project-dag and current dag run status:running
+[2024-12-27T18:36:19.749+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2024-12-27T18:36:19.751+0000] {subprocess.py:78} INFO - Tmp dir root location: /tmp
+[2024-12-27T18:36:19.755+0000] {subprocess.py:88} INFO - Running command: ['/usr/bin/bash', '-c', 'echo "hello world"']
+[2024-12-27T18:36:19.775+0000] {subprocess.py:99} INFO - Output:
+[2024-12-27T18:36:19.777+0000] {subprocess.py:106} INFO - hello world
+[2024-12-27T18:36:19.778+0000] {subprocess.py:110} INFO - Command exited with return code 0
+[2024-12-27T18:36:19.819+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2024-12-27T18:36:19.821+0000] {taskinstance.py:352} INFO - Marking task as SUCCESS. dag_id=de01-final-project-dag, task_id=test, run_id=manual__2024-12-27T18:36:16.839199+00:00, execution_date=20241227T183616, start_date=20241227T183619, end_date=20241227T183619
+[2024-12-27T18:36:19.840+0000] {logging_mixin.py:190} INFO - Task instance in success state
+[2024-12-27T18:36:19.841+0000] {logging_mixin.py:190} INFO -  Previous state of the Task instance: running
+[2024-12-27T18:36:19.842+0000] {logging_mixin.py:190} INFO - Dag name:de01-final-project-dag queued_at:2024-12-27 18:36:16.854011+00:00
+[2024-12-27T18:36:19.843+0000] {logging_mixin.py:190} INFO - Task hostname:3382f7f7a84d operator:BashOperator
+[2024-12-27T18:36:19.892+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 0
+[2024-12-27T18:36:19.914+0000] {taskinstance.py:3895} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2024-12-27T18:36:19.919+0000] {local_task_job_runner.py:245} INFO - ::endgroup::

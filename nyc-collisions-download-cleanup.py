@@ -41,5 +41,16 @@ while True:
 
 # convert the downloaded data from json to DataFrame, then export it into .csv files
 df = pd.DataFrame(all_data)
+
+# drop the location column
+df.drop(['location'], axis = 1, inplace = True)
+
+# drop the null values in some columns
+df.dropna(subset = ['contributing_factor_vehicle_1','vehicle_type_code1','latitude','longitude'], inplace = True)
+
+# drop the observations with 0,0 coordinates
+df.drop(df[(df['latitude'] == 0) & (df['longitude'] == 0)].index, inplace = True)
+
+# exported the cleaned data onto new .csv files
 df.to_csv('nyc-collisions.csv',index = False)
 print(f"{i} page(s) of dataset were downloaded successfully.")

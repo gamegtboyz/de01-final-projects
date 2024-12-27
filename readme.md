@@ -9,3 +9,20 @@ The questions we primarily asked from the dataset are:
 3. Where are the most frequent collision site. (we will mapped the coordinates as visualization)
 4. Which type of vehicle cause the most casualities/fatalities rate (person per 1000 collisions)
 5. Is the time of the day (daytime/nighttime) associated with collision frequencies.
+
+็Here's how to install Apache Airflow through Docker Desktop, and how to maintenance it.
+
+After install Docker Desktop, open VScode and WSL terminal and put the following command.
+1. curl -LfO 'https://airflow.apache.org/docs/apache-airflow/2.10.4/docker-compose.yaml'    # to create .yaml file, which include the pack of software i.e. postgres, redis, and airflow.
+2. mkdir -p ./dags ./logs ./plugins     # setup airflow directories
+3. echo -e "AIRFLOW_UID=$(id -u)" > .env    # set up the permissions of curent user to virtual environment.
+4. docker-compose up airflow-init       # initialize airflow database
+5. docker-compose up        # start running airflow. you could access airflow UI at this point using localhost:8080 with username == airflow and password == airflow
+
+For users who clone this repository with Docker Desktop installed, please use the command as mentioned in 4. and 5.
+
+In case of localhost:8080 doesn't load (this happended on my PC when reopen the computer), you could use theis following commands to troubleshoot the issues
+1. docker restart <webserver container NAMES>       # to restart the container
+2. docker-compose down --volumes --remove-orphans
+>> docker-compose up airflow-init
+>> docker-compose up -d     # in case of restarting the container doesn't work, please use the following command to re-initiate the airflow.
