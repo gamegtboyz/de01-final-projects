@@ -1,0 +1,114 @@
+[2024-12-31T10:44:31.073+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2024-12-31T10:44:31.121+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: de01-final-project-dag.load-and-clean scheduled__2024-12-30T00:00:00+00:00 [queued]>
+[2024-12-31T10:44:31.149+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: de01-final-project-dag.load-and-clean scheduled__2024-12-30T00:00:00+00:00 [queued]>
+[2024-12-31T10:44:31.151+0000] {taskinstance.py:2866} INFO - Starting attempt 9 of 11
+[2024-12-31T10:44:31.187+0000] {taskinstance.py:2889} INFO - Executing <Task(PythonOperator): load-and-clean> on 2024-12-30 00:00:00+00:00
+[2024-12-31T10:44:31.206+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:70: DeprecationWarning: This process (pid=414) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2024-12-31T10:44:31.211+0000] {standard_task_runner.py:72} INFO - Started process 421 to run task
+[2024-12-31T10:44:31.212+0000] {standard_task_runner.py:104} INFO - Running: ['***', 'tasks', 'run', 'de01-final-project-dag', 'load-and-clean', 'scheduled__2024-12-30T00:00:00+00:00', '--job-id', '42', '--raw', '--subdir', 'DAGS_FOLDER/dags.py', '--cfg-path', '/tmp/tmp5dt7rm9p']
+[2024-12-31T10:44:31.215+0000] {standard_task_runner.py:105} INFO - Job 42: Subtask load-and-clean
+[2024-12-31T10:44:31.339+0000] {task_command.py:467} INFO - Running <TaskInstance: de01-final-project-dag.load-and-clean scheduled__2024-12-30T00:00:00+00:00 [running]> on host 864534f4bb16
+[2024-12-31T10:44:31.530+0000] {taskinstance.py:3132} INFO - Exporting env vars: AIRFLOW_CTX_DAG_EMAIL='test@***.com' AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='de01-final-project-dag' AIRFLOW_CTX_TASK_ID='load-and-clean' AIRFLOW_CTX_EXECUTION_DATE='2024-12-30T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='9' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2024-12-30T00:00:00+00:00'
+[2024-12-31T10:44:31.533+0000] {logging_mixin.py:190} INFO - Task instance is in running state
+[2024-12-31T10:44:31.534+0000] {logging_mixin.py:190} INFO -  Previous state of the Task instance: queued
+[2024-12-31T10:44:31.536+0000] {logging_mixin.py:190} INFO - Current task name:load-and-clean state:running start_date:2024-12-31 10:44:31.123502+00:00
+[2024-12-31T10:44:31.537+0000] {logging_mixin.py:190} INFO - Dag name:de01-final-project-dag and current dag run status:running
+[2024-12-31T10:44:31.538+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2024-12-31T10:44:31.603+0000] {taskinstance.py:3311} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 767, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 733, in _execute_callable
+    return ExecutionCallableRunner(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/operator_helpers.py", line 252, in run
+    return self.func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 422, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 238, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 256, in execute_callable
+    return runner.run(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/operator_helpers.py", line 252, in run
+    return self.func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/dags.py", line 36, in load_and_clean
+    raise Exception(f'Script failed with error: {result.stderr}')
+Exception: Script failed with error: python: can't open file '/opt/***/nyc-collisions-download-cleanup.py': [Errno 2] No such file or directory
+
+[2024-12-31T10:44:31.645+0000] {logging_mixin.py:190} INFO - Task instance in failure state
+[2024-12-31T10:44:31.647+0000] {logging_mixin.py:190} INFO - Task start:2024-12-31 10:44:31.123502+00:00 end:2024-12-31 10:44:31.644834+00:00 duration:0.521332
+[2024-12-31T10:44:31.648+0000] {logging_mixin.py:190} INFO - Task:<Task(PythonOperator): load-and-clean> dag:<DAG: de01-final-project-dag> dagrun:<DagRun de01-final-project-dag @ 2024-12-30 00:00:00+00:00: scheduled__2024-12-30T00:00:00+00:00, state:running, queued_at: 2024-12-31 10:35:28.439701+00:00. externally triggered: False>
+[2024-12-31T10:44:31.649+0000] {logging_mixin.py:190} INFO - Failure caused by Script failed with error: python: can't open file '/opt/***/nyc-collisions-download-cleanup.py': [Errno 2] No such file or directory
+[2024-12-31T10:44:31.651+0000] {taskinstance.py:1225} INFO - Marking task as UP_FOR_RETRY. dag_id=de01-final-project-dag, task_id=load-and-clean, run_id=scheduled__2024-12-30T00:00:00+00:00, execution_date=20241230T000000, start_date=20241231T104431, end_date=20241231T104431
+[2024-12-31T10:44:31.692+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2024-12-31T10:44:31.694+0000] {standard_task_runner.py:124} ERROR - Failed to execute job 42 for task load-and-clean (Script failed with error: python: can't open file '/opt/***/nyc-collisions-download-cleanup.py': [Errno 2] No such file or directory
+; 421)
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/task/task_runner/standard_task_runner.py", line 117, in _start_by_fork
+    ret = args.func(args, dag=self.dag)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/cli/cli_config.py", line 49, in command
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/cli.py", line 116, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/cli/commands/task_command.py", line 483, in task_run
+    task_return_code = _run_task_by_selected_method(args, _dag, ti)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/cli/commands/task_command.py", line 256, in _run_task_by_selected_method
+    return _run_raw_task(args, ti)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/cli/commands/task_command.py", line 341, in _run_raw_task
+    return ti._run_raw_task(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/session.py", line 97, in wrapper
+    return func(*args, session=session, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 3005, in _run_raw_task
+    return _run_raw_task(
+           ^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 273, in _run_raw_task
+    TaskInstance._execute_task_with_callbacks(
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 3159, in _execute_task_with_callbacks
+    result = self._execute_task(context, task_orig)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 3183, in _execute_task
+    return _execute_task(self, context, task_orig)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 767, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 733, in _execute_callable
+    return ExecutionCallableRunner(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/operator_helpers.py", line 252, in run
+    return self.func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 422, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 238, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 256, in execute_callable
+    return runner.run(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/operator_helpers.py", line 252, in run
+    return self.func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/dags.py", line 36, in load_and_clean
+    raise Exception(f'Script failed with error: {result.stderr}')
+Exception: Script failed with error: python: can't open file '/opt/***/nyc-collisions-download-cleanup.py': [Errno 2] No such file or directory
+
+[2024-12-31T10:44:31.754+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 1
+[2024-12-31T10:44:31.808+0000] {taskinstance.py:3895} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2024-12-31T10:44:31.814+0000] {local_task_job_runner.py:245} INFO - ::endgroup::
