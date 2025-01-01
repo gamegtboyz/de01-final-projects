@@ -49,7 +49,7 @@ After the successful DAG run, we could access those .csv file from ~/logs folder
 After the successful DAG run, we should access the database through postgresql's container using the following command, respectively.
 1. docker exec -it final-projects-postgres-1 bash   # to access the container's bash terminal. If everything's right, you'll be able to access postgresql's container terminal.
 2. psql -U airflow d- airflow   # to enter SQL shell mode with uername == airflow and databased named 'airflow'. We will redefine it later. But right now we could use SQL query to extract the data from table called 'collisions'
-3. SELECT * from collisions LIMIT 10;   # extract the firat 10 rows of data.
+3. SELECT * from collisions LIMIT 10;   # extract the first 10 rows of data.
 
 
 
