@@ -27,7 +27,7 @@ with DAG (
         'retry_delay': timedelta(minutes=10)
     },
     schedule = timedelta(days=1),
-    start_date = datetime(2024, 12, 28)
+    start_date = datetime(2025, 1, 1)
 ) as dag:
 
     # set the tasks list

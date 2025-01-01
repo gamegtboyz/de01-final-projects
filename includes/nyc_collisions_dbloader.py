@@ -11,12 +11,12 @@ def dbload():
         'user': 'airflow',
         'password': 'airflow',
         'host': 'localhost',
-        'port': '6000',
-        'database': 'nyc_collisions'
+        'port': 5432,
+        'database': 'airflow'
     }
 
     # create database connection string
-    connection_string = f"postgresql://{db_config['user']}:{db_config['password']}@{db_config['host']}:{db_config['port']}/{db_config['database']}"
+    connection_string = f"postgresql+psycopg2://{db_config['user']}:{db_config['password']}@{db_config['host']}:{db_config['port']}/{db_config['database']}"
 
     # create engine
     engine = create_engine(connection_string)
