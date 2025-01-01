@@ -10,7 +10,7 @@ def dbload():
     db_config = {
         'user': 'airflow',
         'password': 'airflow',
-        'host': 'localhost',
+        'host': 'postgres',
         'port': 5432,
         'database': 'airflow'
     }
