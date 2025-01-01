@@ -39,7 +39,7 @@ Then, you could find the project's dag called 'de01-final-project-dag' among the
 
 Then you could obtain the running result from the ~/logs/dag_id=de01-final-project-dag
 
-#### How to access running output
+### How to access running output
 At this point (January 1, 2025), this dag should return 2 tangible outputs, which is data called 'nyc-collisions.csv' and the table in airlow/collisions database. Here's how to access it through VScode.
 
 ##### how to access 'nyc-collisions.csv'
