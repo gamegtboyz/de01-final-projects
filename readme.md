@@ -1,5 +1,5 @@
-===
-DATA SOURCE & QUESTIONS
+
+## DATA SOURCE & QUESTIONS
 
 We gathered this information from the following link:
     https://data.cityofnewyork.us/Public-Safety/Motor-Vehicle-Collisions-Crashes/h9gi-nx95/about_data
@@ -14,9 +14,9 @@ The questions we primarily asked from the dataset are:
 5. Is the time of the day (daytime/nighttime) associated with collision frequencies.
 
 
-=========================
-INSTALLATION GUIDE
-=========================
+
+## INSTALLATION GUIDE
+
 ็Here's how to install Apache Airflow through Docker Desktop, and how to maintenance it.
 
 After install Docker Desktop, open VScode and WSL terminal and put the following command.
@@ -25,9 +25,9 @@ After install Docker Desktop, open VScode and WSL terminal and put the following
 3. echo -e "AIRFLOW_UID=$(id -u)" > .env    # set up the permissions of curent user to virtual environment.
 
 
-=========================
-USERS' GUIDE
-=========================
+
+## USERS' GUIDE
+
 Right after 
 1. docker-compose up airflow-init       # initialize airflow database
 2. docker-compose up        # start running airflow. you could access airflow UI at this point using localhost:8080 with username == airflow and password == airflow
@@ -35,9 +35,9 @@ Right after
 For users who clone this repository with Docker Desktop installed, please use the command as mentioned in 4. and 5.
 
 
-=========================
-MAINTENANCE GUIDE
-=========================
+
+## MAINTENANCE GUIDE
+
 In case of localhost:8080 doesn't load (this happended on my PC when reopen the computer), you could use theis following commands to troubleshoot the issues
 1. docker restart <webserver container NAMES>       # to restart the container
 
