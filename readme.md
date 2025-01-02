@@ -43,7 +43,7 @@ Then you could obtain the running result from the ~/logs/dag_id=de01-final-proje
 At this point (January 1, 2025), this dag should return 2 tangible outputs, which is data called 'nyc-collisions.csv' and the table in airlow/collisions database. Here's how to access it through VScode.
 
 ##### how to access 'nyc-collisions.csv'
-After the successful DAG run, we could access those .csv file from ~/logs folder.
+After the successful DAG run, we could access those .csv file from ~/includes/outputs folder.
 
 ##### how to access db file in database
 After the successful DAG run, we should access the database through postgresql's container using the following command, respectively.
