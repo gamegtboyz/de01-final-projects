@@ -6,12 +6,11 @@ from datetime import datetime, timedelta
 from airflow.models.dag import DAG
 
 # import operators package
-from airflow.operators.bash import BashOperator
 from airflow.operators.python import PythonOperator
 
 # import the python callable function
-from includes.nyc_collisions_download_cleanup import load_and_clean
-from includes.nyc_collisions_dbloader import dbload
+from includes.t1_download_cleanup import load_and_clean
+from includes.t2_dbloader import dbload
 from includes.q1_collisioncause import collisioncause
 from includes.q2_collisionvehicle import collisionvehicle
 from includes.q3_collisionmap import collisionmap
