@@ -12,6 +12,11 @@ from airflow.operators.python import PythonOperator
 # import the python callable function
 from includes.nyc_collisions_download_cleanup import load_and_clean
 from includes.nyc_collisions_dbloader import dbload
+from includes.q1_collisioncause import collisioncause
+from includes.q2_collisionvehicle import collisionvehicle
+from includes.q3_collisionmap import collisionmap
+from includes.q4_casualityrate import casualityrate
+from includes.q5_collisiontime import collisiontime
 
 # instantiate a DAG
 with DAG (
@@ -44,5 +49,35 @@ with DAG (
         dag = dag
     )
 
+    q1 = PythonOperator(
+        task_id = 'q1-collisioncause',
+        python_callable = collisioncause,
+        dag = dag
+    )
+
+    q2 = PythonOperator(
+        task_id = 'q2-collisionvehicle',
+        python_callable = collisionvehicle,
+        dag = dag
+    )
+
+    q3 = PythonOperator(
+        task_id = 'q3-collisionmap',
+        python_callable = collisionmap,
+        dag = dag
+    )
+
+    q4 = PythonOperator(
+        task_id = 'q4-casualityrate',
+        python_callable = casualityrate,
+        dag = dag
+    )
+
+    q5 = PythonOperator(
+        task_id = 'q5-collisiontime',
+        python_callable = collisiontime,
+        dag = dag
+    )
+
     # set task dependencies
-    t1 >> t2
+    t1 >> t2 >> q1 >> q2 >> q3 >> q4 >> q5

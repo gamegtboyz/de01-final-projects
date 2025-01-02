@@ -2,23 +2,12 @@ def dbload():
     # download the relevant library
     import pandas as pd
     from sqlalchemy import create_engine
+    from includes.db_config import connection_string
 
     # download the file onto the dataframe
-    df = pd.read_csv('includes/nyc-collisions.csv')
+    df = pd.read_csv('includes/outputs/nyc-collisions.csv')
 
-    # configure database connection (we will use it to build up connection string)
-    db_config = {
-        'user': 'airflow',
-        'password': 'airflow',
-        'host': 'postgres',
-        'port': 5432,
-        'database': 'airflow'
-    }
-
-    # create database connection string
-    connection_string = f"postgresql+psycopg2://{db_config['user']}:{db_config['password']}@{db_config['host']}:{db_config['port']}/{db_config['database']}"
-
-    # create engine
+    # create database connection
     engine = create_engine(connection_string)
 
     # write dataframe to sql
@@ -29,3 +18,6 @@ def dbload():
         print(f"DataFrame was written to '{table_name}' table succesfully.")
     except Exception as e:
         print("Error: ", e)
+
+    # close database connection
+    engine.dispose()

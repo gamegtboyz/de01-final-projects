@@ -54,5 +54,5 @@ def load_and_clean():
     df.drop(df[(df['latitude'] == 0) & (df['longitude'] == 0)].index, inplace = True)
 
     # exported the cleaned data onto new .csv files
-    df.to_csv('includes/nyc-collisions.csv',index = False)
+    df.to_csv('includes/outputs/nyc-collisions.csv',index = False)
     print(f"{i} page(s) of dataset were downloaded successfully.")
