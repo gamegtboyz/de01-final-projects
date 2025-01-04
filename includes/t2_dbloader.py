@@ -2,7 +2,7 @@ def dbload():
     # download the relevant library
     import pandas as pd
     from sqlalchemy import create_engine
-    from includes.db_config import connection_string
+    from config.db_config import connection_string
 
     # download the file onto the dataframe
     df = pd.read_csv('includes/outputs/nyc-collisions.csv')

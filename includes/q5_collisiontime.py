@@ -3,7 +3,7 @@ def collisiontime():
     from sqlalchemy import create_engine
     import pandas as pd
     #import matplotlib.pyplot as plt
-    from includes.db_config import connection_string
+    from config.db_config import connection_string
 
     #create database connection 
     engine = create_engine(connection_string)
