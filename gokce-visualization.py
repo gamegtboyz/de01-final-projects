@@ -51,7 +51,7 @@ plt.tight_layout()
 plt.savefig("top_contributing_factors.svg", format="svg")
 plt.show()
 
-# Most Common Vehicle Types (Grouped)
+# 2. Most Common Vehicle Types (Grouped)
 vehicle_type_counts_grouped = collision_data.melt(
     value_vars=vehicle_type_columns, value_name="vehicle_type"
 ).dropna(subset=["vehicle_type"])['vehicle_type'].value_counts()
@@ -63,7 +63,7 @@ plt.tight_layout()
 plt.savefig("common_vehicle_types_grouped.svg", format="svg")
 plt.show()
 
-# Casualty Rates by Vehicle Type (Grouped)
+# 4. Casualty Rates by Vehicle Type (Grouped)
 vehicle_casualties_grouped = collision_data.melt(
     id_vars=['total_casualties'], value_vars=vehicle_type_columns, value_name='vehicle_type'
 ).dropna(subset=['vehicle_type'])
@@ -83,7 +83,7 @@ plt.tight_layout()
 plt.savefig("vehicle_casualty_rates_grouped.svg", format="svg")
 plt.show()
 
-# Collision Frequencies by Time of Day
+# 5. Collision Frequencies by Time of Day
 collision_data['crash_hour'] = pd.to_datetime(collision_data['crash_time'], format='%H:%M', errors='coerce').dt.hour
 collision_data['time_of_day'] = collision_data['crash_hour'].apply(
     lambda x: 'Daytime' if 6 <= x < 18 else 'Nighttime' if pd.notna(x) else 'Unknown'
@@ -98,7 +98,7 @@ plt.tight_layout()
 plt.savefig("collision_time_of_day_grouped.svg", format="svg")
 plt.show()
 
-# Interactive Map for Most Frequent Collision Sites
+# 3. Interactive Map for Most Frequent Collision Sites
 top_collision_sites = collision_data.groupby(['latitude', 'longitude']).size().reset_index(name='collision_count')
 top_collision_sites = top_collision_sites.sort_values(by='collision_count', ascending=False).head(10)
 nyc_map = folium.Map(location=[40.7128, -74.0060], zoom_start=11)
