@@ -40,13 +40,14 @@ def collisionvehicle():
         'vehicle_type_code1', 'vehicle_type_code2', 'vehicle_type_code_3',
         'vehicle_type_code_4', 'vehicle_type_code_5'
     ]
+
     for col in vehicle_type_columns:
         collision_data[col] = collision_data[col].apply(classify_vehicle_type)
 
     # 2. Most Common Vehicle Types (Grouped)
     vehicle_type_counts_grouped = collision_data.melt(
         value_vars=vehicle_type_columns, value_name="vehicle_type"
-    ).dropna(subset=["vehicle_type"])['vehicle_type'].value_counts()
+    ).dropna(subset=["vehicle_type"])['vehicle_type'].value_counts().drop(labels='Unknown')
     plt.figure(figsize=(10, 6))
     vehicle_type_counts_grouped.sort_values().plot(kind='barh', color='orange', title="Most Common Vehicle Types in Collisions (Grouped)")
     plt.xlabel("Number of Collisions")

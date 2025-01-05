@@ -79,4 +79,4 @@ with DAG (
     )
 
     # set task dependencies
-    t1 >> t2 >> q1 >> q2 >> q3 >> q4 >> q5
+    t1 >> t2 >> [q1,q2,q3,q4,q5]

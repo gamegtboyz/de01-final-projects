@@ -40,6 +40,7 @@ def casualityrate():
         'vehicle_type_code1', 'vehicle_type_code2', 'vehicle_type_code_3',
         'vehicle_type_code_4', 'vehicle_type_code_5'
     ]
+    
     for col in vehicle_type_columns:
         collision_data[col] = collision_data[col].apply(classify_vehicle_type)
 
@@ -59,7 +60,7 @@ def casualityrate():
         casualty_rates_grouped['total_casualties'] / casualty_rates_grouped['collision_count']
     ) * 1000
     plt.figure(figsize=(10, 6))
-    casualty_rates_grouped['casualties_per_1000_collisions'].sort_values().plot(
+    casualty_rates_grouped['casualties_per_1000_collisions'].sort_values().drop(labels='Unknown').plot(
         kind='barh', color='green', title="Vehicle Types with Highest Casualty Rates (Grouped)"
     )
     plt.xlabel("Casualties per 1,000 Collisions")

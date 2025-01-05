@@ -2,3 +2,5 @@
 *.log
 *.pbix
 *.txt
+gokce-visualization.py
+*.ipynb

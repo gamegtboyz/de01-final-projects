@@ -54,7 +54,7 @@ After the successful DAG run, we should access the database through postgresql's
 
 
 ## MAINTENANCE GUIDE
-
+### Webserver is not running
 In case of localhost:8080 doesn't load (this happended on my PC when reopen the computer), you could use theis following commands to troubleshoot the issues
 1. docker restart final-projects-airflow-webserver-1       # to restart the container
 
@@ -62,3 +62,14 @@ in case of command per 1 doesn't work, please use the following command respecti
 1. docker-compose down --volumes --remove-orphans
 2. docker-compose up airflow-init
 3. docker-compose up -d
+
+### Installing new package
+1. located the Dockerfile
+2. Insert the following commands, in this case we need to install matplotlib.
+    FROM apache/airflow:2.10.4
+    RUN pip install matplotlib
+    ...
+3. use the command as follows to build up to build up docker image, in this case we named it as my-de01-airflow.
+    docker build -t my-de01-airflow .
+4. go to .yaml file and check the x-airflow-common > image section to make sure if airflow are built up with on our customised image.
+    image: my-de01-airflow
