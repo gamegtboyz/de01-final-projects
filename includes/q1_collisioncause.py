@@ -23,6 +23,12 @@ def collisioncause():
     plt.tight_layout()
     plt.savefig("includes/outputs/figures/1_top_contributing_factors.svg", format="svg")
 
+    # create the new qury to extract the table accordingly
+    query_t = "SELECT mv.contributing_factor_vehicle,count(*) as frequency from (select contributing_factor_vehicle_1 contributing_factor_vehicle from collisions union all select contributing_factor_vehicle_2 contributing_factor_vehicle from collisions union all select contributing_factor_vehicle_3 contributing_factor_vehicle from collisions union all select contributing_factor_vehicle_4 contributing_factor_vehicle from collisions union all select vehicle_type_code_5 contributing_factor_vehicle from collisions  ) mv group by contributing_factor_vehicle order by frequency desc limit 10"
+    collision_data_t = pd.read_sql_query(query_t, engine)
+
+    collision_data_t.to_csv('includes/outputs/table1.csv')
+
     # close database connection
     engine.dispose()
 

@@ -37,7 +37,7 @@ def collisiontime():
     # Add labels, legend, and title
     plt.xlabel('Hour of Day', fontsize=12)
     plt.ylabel('Number of Collisions', fontsize=12)
-    plt.title('Hourly Collisions: Daytime vs. Nighttime', fontsize=14)
+    plt.title('Multi-layered Histogram of Collisions: Daytime vs. Nighttime', fontsize=14)
     plt.legend()
     plt.xticks(range(0, 24, 2))
     plt.grid(axis='y', linestyle='--', alpha=0.7)
@@ -45,6 +45,9 @@ def collisiontime():
 
     # close database connection
     engine.dispose()
-
+    query_t = "SELECT CASE WHEN CRASH_TIME >= '06:00:00' AND CRASH_TIME < '18:00:00' THEN 'Daytime' ELSE 'Nighttime' END AS Time_Period, COUNT(*) AS Collision_Count FROM collisions WHERE CRASH_TIME IS NOT NULL GROUP BY Time_Period ORDER BY Collision_Count DESC"
+    collision_data_t = pd.read_sql_query(query_t, engine)
+    
+    collision_data_t.to_csv('includes/outputs/table5.csv')
     # inform the processing results
     print("Question#5 task was processed succesfully.")

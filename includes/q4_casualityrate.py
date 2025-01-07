@@ -71,5 +71,10 @@ def casualityrate():
     # close database connection
     engine.dispose()
 
+    query_t = "SELECT Vehicle_Type,COUNT(*) AS Total_Collisions,SUM(NUMBER_OF_PERSONS_KILLED + NUMBER_OF_PERSONS_INJURED) AS Total_Casualties,ROUND((SUM(NUMBER_OF_PERSONS_KILLED+ NUMBER_OF_PERSONS_INJURED)* 1000.0) / COUNT(*),2) AS Casualties_Per_1000_Collisions FROM (SELECT VEHICLE_TYPE_CODE1 AS Vehicle_Type,NUMBER_OF_PERSONS_KILLED , NUMBER_OF_PERSONS_INJURED FROM collisions UNION ALL SELECT VEHICLE_TYPE_CODE2 AS Vehicle_Type, NUMBER_OF_PERSONS_KILLED, NUMBER_OF_PERSONS_INJURED FROM collisions UNION ALL SELECT VEHICLE_TYPE_CODE_3 AS Vehicle_Type,NUMBER_OF_PERSONS_KILLED, NUMBER_OF_PERSONS_INJURED FROM collisions UNION ALL SELECT VEHICLE_TYPE_CODE_4 AS Vehicle_Type, NUMBER_OF_PERSONS_KILLED, NUMBER_OF_PERSONS_INJURED FROM collisions UNION ALL SELECT VEHICLE_TYPE_CODE_5 AS Vehicle_Type, NUMBER_OF_PERSONS_KILLED, NUMBER_OF_PERSONS_INJURED FROM collisions) AS Combined_Vehicles GROUP BY Vehicle_Type ORDER BY Casualties_Per_1000_Collisions DESC LIMIT 10"
+    collision_data_t = pd.read_sql_query(query_t, engine)
+    
+    collision_data_t.to_csv('includes/outputs/table4.csv')
+
     # inform the processing results
     print("Question#4 task was processed succesfully.")

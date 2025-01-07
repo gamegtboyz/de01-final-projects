@@ -58,5 +58,10 @@ def collisionvehicle():
     # close database connection
     engine.dispose()
 
+    query_t = "SELECT mv.vehicletypecode,count(*) as frequency from (select vehicle_type_code1 vehicletypecode from collisions union all select vehicle_type_code2 vehicletypecode from collisions union all select vehicle_type_code_3 vehicletypecode from collisions union all select vehicle_type_code_4 vehicletypecode from collisions union all select vehicle_type_code_5 vehicletypecode from collisions  ) mv group by vehicletypecode order by frequency desc limit 10"
+    collision_data_t = pd.read_sql_query(query_t, engine)
+    
+    collision_data_t.to_csv('includes/outputs/table2.csv')
+
     # inform the processing results
     print("Question#2 task was processed succesfully.")
