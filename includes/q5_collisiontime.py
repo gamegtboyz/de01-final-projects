@@ -48,6 +48,6 @@ def collisiontime():
     query_t = "SELECT CASE WHEN CRASH_TIME >= '06:00:00' AND CRASH_TIME < '18:00:00' THEN 'Daytime' ELSE 'Nighttime' END AS Time_Period, COUNT(*) AS Collision_Count FROM collisions WHERE CRASH_TIME IS NOT NULL GROUP BY Time_Period ORDER BY Collision_Count DESC"
     collision_data_t = pd.read_sql_query(query_t, engine)
     
-    collision_data_t.to_csv('includes/outputs/table5.csv')
+    collision_data_t.to_csv('includes/outputs/tables/table5.csv')
     # inform the processing results
     print("Question#5 task was processed succesfully.")
