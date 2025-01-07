@@ -37,7 +37,7 @@ def collisiontime():
     # Add labels, legend, and title
     plt.xlabel('Hour of Day', fontsize=12)
     plt.ylabel('Number of Collisions', fontsize=12)
-    plt.title('Multi-layered Histogram of Collisions: Daytime vs. Nighttime', fontsize=14)
+    plt.title('Hourly Collisions: Daytime vs. Nighttime', fontsize=14)
     plt.legend()
     plt.xticks(range(0, 24, 2))
     plt.grid(axis='y', linestyle='--', alpha=0.7)
