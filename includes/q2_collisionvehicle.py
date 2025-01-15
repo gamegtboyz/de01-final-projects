@@ -9,7 +9,13 @@ def collisionvehicle():
     engine = create_engine(connection_string)
 
     # create SQL query
-    query = "SELECT * from collisions"
+    query = "SELECT \
+        vehicle_type_code1,\
+        vehicle_type_code2,\
+        vehicle_type_code_3,\
+        vehicle_type_code_4,\
+        vehicle_type_code_5\
+        from collisions"
 
     # export query to dataframe
     collision_data = pd.read_sql_query(query, engine)

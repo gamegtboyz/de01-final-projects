@@ -11,7 +11,7 @@ def collisionmap():
     engine = create_engine(connection_string)
 
     # create SQL query
-    query = "SELECT * from collisions"
+    query = "SELECT latitude,longitude from collisions"
 
     # export query to dataframe
     collision_data = pd.read_sql_query(query, engine)

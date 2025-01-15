@@ -9,7 +9,13 @@ def collisioncause():
     engine = create_engine(connection_string)
 
     # create SQL query
-    query = "SELECT * from collisions"
+    query = "SELECT \
+        contributing_factor_vehicle_1,\
+        contributing_factor_vehicle_2,\
+        contributing_factor_vehicle_3,\
+        contributing_factor_vehicle_4,\
+        contributing_factor_vehicle_5 \
+        from collisions"
 
     # export query to dataframe
     collision_data = pd.read_sql_query(query, engine)
