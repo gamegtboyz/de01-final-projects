@@ -76,13 +76,121 @@ def casualityrate():
     plt.tight_layout()
     plt.savefig("includes/outputs/figures/4_vehicle_casualty_rates_grouped.svg", format="svg")
 
-    # close database connection
-    engine.dispose()
 
-    query_t = "SELECT Vehicle_Type,COUNT(*) AS Total_Collisions,SUM(NUMBER_OF_PERSONS_KILLED + NUMBER_OF_PERSONS_INJURED) AS Total_Casualties,ROUND((SUM(NUMBER_OF_PERSONS_KILLED+ NUMBER_OF_PERSONS_INJURED)* 1000.0) / COUNT(*),2) AS Casualties_Per_1000_Collisions FROM (SELECT VEHICLE_TYPE_CODE1 AS Vehicle_Type,NUMBER_OF_PERSONS_KILLED , NUMBER_OF_PERSONS_INJURED FROM collisions UNION ALL SELECT VEHICLE_TYPE_CODE2 AS Vehicle_Type, NUMBER_OF_PERSONS_KILLED, NUMBER_OF_PERSONS_INJURED FROM collisions UNION ALL SELECT VEHICLE_TYPE_CODE_3 AS Vehicle_Type,NUMBER_OF_PERSONS_KILLED, NUMBER_OF_PERSONS_INJURED FROM collisions UNION ALL SELECT VEHICLE_TYPE_CODE_4 AS Vehicle_Type, NUMBER_OF_PERSONS_KILLED, NUMBER_OF_PERSONS_INJURED FROM collisions UNION ALL SELECT VEHICLE_TYPE_CODE_5 AS Vehicle_Type, NUMBER_OF_PERSONS_KILLED, NUMBER_OF_PERSONS_INJURED FROM collisions) AS Combined_Vehicles GROUP BY Vehicle_Type ORDER BY Casualties_Per_1000_Collisions DESC LIMIT 10"
+
+    query_t = "WITH classified_vehicle_types AS (\
+                SELECT \
+                    collision_id,\
+                    total_casualties,\
+                    CASE\
+                        WHEN LOWER(vehicle_type_code1) LIKE '%suv%' OR LOWER(vehicle_type_code1) LIKE '%wagon%' THEN 'SUV'\
+                        WHEN LOWER(vehicle_type_code1) LIKE '%sedan%' THEN 'Sedan'\
+                        WHEN LOWER(vehicle_type_code1) LIKE '%truck%' THEN 'Truck'\
+                        WHEN LOWER(vehicle_type_code1) LIKE '%bus%' THEN 'Bus'\
+                        WHEN LOWER(vehicle_type_code1) LIKE '%bike%' OR LOWER(vehicle_type_code1) LIKE '%e-bike%' THEN 'Bike'\
+                        WHEN LOWER(vehicle_type_code1) LIKE '%scooter%' THEN 'Scooter'\
+                        WHEN vehicle_type_code1 IS NOT NULL THEN 'Other'\
+                        ELSE 'Unknown'\
+                    END AS vehicle_type\
+                FROM (\
+                    SELECT *,\
+                        (number_of_persons_injured + number_of_persons_killed) AS total_casualties\
+                    FROM collisions\
+                ) \
+                UNION ALL\
+                SELECT \
+                    id,\
+                    total_casualties,\
+                    CASE\
+                        WHEN LOWER(vehicle_type_code2) LIKE '%suv%' OR LOWER(vehicle_type_code2) LIKE '%wagon%' THEN 'SUV'\
+                        WHEN LOWER(vehicle_type_code2) LIKE '%sedan%' THEN 'Sedan'\
+                        WHEN LOWER(vehicle_type_code2) LIKE '%truck%' THEN 'Truck'\
+                        WHEN LOWER(vehicle_type_code2) LIKE '%bus%' THEN 'Bus'\
+                        WHEN LOWER(vehicle_type_code2) LIKE '%bike%' OR LOWER(vehicle_type_code2) LIKE '%e-bike%' THEN 'Bike'\
+                        WHEN LOWER(vehicle_type_code2) LIKE '%scooter%' THEN 'Scooter'\
+                        WHEN vehicle_type_code2 IS NOT NULL THEN 'Other'\
+                        ELSE 'Unknown'\
+                    END AS vehicle_type\
+                FROM (\
+                    SELECT *,\
+                        (number_of_persons_injured + number_of_persons_killed) AS total_casualties\
+                    FROM collisions\
+                ) \
+                UNION ALL\
+                SELECT \
+                    collision_id,\
+                    total_casualties,\
+                    CASE\
+                        WHEN LOWER(vehicle_type_code_3) LIKE '%suv%' OR LOWER(vehicle_type_code_3) LIKE '%wagon%' THEN 'SUV'\
+                        WHEN LOWER(vehicle_type_code_3) LIKE '%sedan%' THEN 'Sedan'\
+                        WHEN LOWER(vehicle_type_code_3) LIKE '%truck%' THEN 'Truck'\
+                        WHEN LOWER(vehicle_type_code_3) LIKE '%bus%' THEN 'Bus'\
+                        WHEN LOWER(vehicle_type_code_3) LIKE '%bike%' OR LOWER(vehicle_type_code_3) LIKE '%e-bike%' THEN 'Bike'\
+                        WHEN LOWER(vehicle_type_code_3) LIKE '%scooter%' THEN 'Scooter'\
+                        WHEN vehicle_type_code_3 IS NOT NULL THEN 'Other'\
+                        ELSE 'Unknown'\
+                    END AS vehicle_type\
+                FROM (\
+                    SELECT *,\
+                        (number_of_persons_injured + number_of_persons_killed) AS total_casualties\
+                    FROM collisions\
+                ) \
+                UNION ALL\
+                SELECT \
+                    collision_id,\
+                    total_casualties,\
+                    CASE\
+                        WHEN LOWER(vehicle_type_code_4) LIKE '%suv%' OR LOWER(vehicle_type_code_4) LIKE '%wagon%' THEN 'SUV'\
+                        WHEN LOWER(vehicle_type_code_4) LIKE '%sedan%' THEN 'Sedan'\
+                        WHEN LOWER(vehicle_type_code_4) LIKE '%truck%' THEN 'Truck'\
+                        WHEN LOWER(vehicle_type_code_4) LIKE '%bus%' THEN 'Bus'\
+                        WHEN LOWER(vehicle_type_code_4) LIKE '%bike%' OR LOWER(vehicle_type_code_4) LIKE '%e-bike%' THEN 'Bike'\
+                        WHEN LOWER(vehicle_type_code_4) LIKE '%scooter%' THEN 'Scooter'\
+                        WHEN vehicle_type_code_4 IS NOT NULL THEN 'Other'\
+                        ELSE 'Unknown'\
+                    END AS vehicle_type\
+                FROM (\
+                    SELECT *,\
+                        (number_of_persons_injured + number_of_persons_killed) AS total_casualties\
+                    FROM collisions\
+                ) \
+                UNION ALL\
+                SELECT \
+                    collision_id,\
+                    total_casualties,\
+                    CASE\
+                        WHEN LOWER(vehicle_type_code_5) LIKE '%suv%' OR LOWER(vehicle_type_code_5) LIKE '%wagon%' THEN 'SUV'\
+                        WHEN LOWER(vehicle_type_code_5) LIKE '%sedan%' THEN 'Sedan'\
+                        WHEN LOWER(vehicle_type_code_5) LIKE '%truck%' THEN 'Truck'\
+                        WHEN LOWER(vehicle_type_code_5) LIKE '%bus%' THEN 'Bus'\
+                        WHEN LOWER(vehicle_type_code_5) LIKE '%bike%' OR LOWER(vehicle_type_code_5) LIKE '%e-bike%' THEN 'Bike'\
+                        WHEN LOWER(vehicle_type_code_5) LIKE '%scooter%' THEN 'Scooter'\
+                        WHEN vehicle_type_code_5 IS NOT NULL THEN 'Other'\
+                        ELSE 'Unknown'\
+                    END AS vehicle_type\
+                FROM (\
+                    SELECT *,\
+                        (number_of_persons_injured + number_of_persons_killed) AS total_casualties\
+                    FROM collisions\
+                ) \
+            )\
+            SELECT \
+                vehicle_type,\
+                SUM(total_casualties) AS total_casualties,\
+                COUNT(*) AS collision_count,\
+                (SUM(total_casualties) * 1000.0 / COUNT(*)) AS casualties_per_1000_collisions\
+            FROM classified_vehicle_types\
+            WHERE vehicle_type <> 'Unknown'\
+            GROUP BY vehicle_type\
+            ORDER BY casualties_per_1000_collisions DESC;"
+    
+    
     collision_data_t = pd.read_sql_query(query_t, engine)
     
     collision_data_t.to_csv('includes/outputs/tables/table4.csv')
+
+    # close database connection
+    engine.dispose()
 
     # inform the processing results
     print("Question#4 task was processed succesfully.")

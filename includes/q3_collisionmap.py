@@ -37,13 +37,22 @@ def collisionmap():
         ).add_to(nyc_map)
     nyc_map.save("includes/outputs/figures/nyc_collision_map.html")
 
-    # close database connection
-    engine.dispose()
-    query_t = "SELECT COALESCE(ON_STREET_NAME, 'Unknown') AS Collision_Street,COALESCE(CROSS_STREET_NAME, 'Unknown') AS Cross_Street,COUNT(*) AS Collision_Count FROM collisions WHERE ON_STREET_NAME IS NOT NULL OR CROSS_STREET_NAME IS NOT NULL GROUP BY COALESCE(ON_STREET_NAME, 'Unknown'), COALESCE(CROSS_STREET_NAME, 'Unknown') ORDER BY Collision_Count DESC LIMIT 10"
+
+    query_t = "SELECT \
+                    COALESCE(ON_STREET_NAME, 'Unknown') AS Collision_Street,\
+                    COALESCE(CROSS_STREET_NAME, 'Unknown') AS Cross_Street,\
+                    COUNT(*) AS Collision_Count \
+                FROM collisions \
+                WHERE ON_STREET_NAME IS NOT NULL OR CROSS_STREET_NAME IS NOT NULL \
+                GROUP BY COALESCE(ON_STREET_NAME, 'Unknown'), COALESCE(CROSS_STREET_NAME, 'Unknown') \
+                ORDER BY Collision_Count DESC \
+                LIMIT 10"
     collision_data_t = pd.read_sql_query(query_t, engine)
     
     collision_data_t.to_csv('includes/outputs/tables/table3.csv')
 
+    # close database connection
+    engine.dispose()
 
     # inform the processing results
     print("Question#3 task was processed succesfully.")

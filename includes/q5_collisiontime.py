@@ -43,11 +43,56 @@ def collisiontime():
     plt.grid(axis='y', linestyle='--', alpha=0.7)
     plt.savefig("includes/outputs/figures/5_collision_time_of_day_grouped.svg", format="svg")
 
-    # close database connection
-    engine.dispose()
-    query_t = "SELECT CASE WHEN CRASH_TIME >= '06:00:00' AND CRASH_TIME < '18:00:00' THEN 'Daytime' ELSE 'Nighttime' END AS Time_Period, COUNT(*) AS Collision_Count FROM collisions WHERE CRASH_TIME IS NOT NULL GROUP BY Time_Period ORDER BY Collision_Count DESC"
+
+    query_t = "WITH processed_data AS (\
+                SELECT \
+                    *,\
+                    EXTRACT(HOUR FROM TO_TIMESTAMP(crash_time, 'HH24:MI')) AS crash_hour,\
+                    CASE\
+                        WHEN TO_TIMESTAMP(crash_time, 'HH24:MI')::TIME >= TIME '06:00' \
+                            AND TO_TIMESTAMP(crash_time, 'HH24:MI')::TIME < TIME '18:00' THEN 'Daytime'\
+                        WHEN TO_TIMESTAMP(crash_time, 'HH24:MI')::TIME IS NOT NULL THEN 'Nighttime'\
+                        ELSE NULL\
+                    END AS time_period\
+                FROM collisions\
+            ),\
+            daytime_data AS (\
+                SELECT \
+                    crash_hour, \
+                    COUNT(*) AS collision_count\
+                FROM processed_data\
+                WHERE time_period = 'Daytime'\
+                GROUP BY crash_hour\
+                ORDER BY crash_hour\
+            ),\
+            nighttime_data AS (\
+                SELECT \
+                    crash_hour, \
+                    COUNT(*) AS collision_count\
+                FROM processed_data\
+                WHERE time_period = 'Nighttime'\
+                GROUP BY crash_hour\
+                ORDER BY crash_hour\
+            )\
+            SELECT \
+                'Daytime' AS time_period, \
+                crash_hour, \
+                collision_count\
+            FROM daytime_data\
+            UNION ALL\
+            SELECT \
+                'Nighttime' AS time_period, \
+                crash_hour, \
+                collision_count\
+            FROM nighttime_data\
+            ORDER BY time_period, crash_hour;"
+
     collision_data_t = pd.read_sql_query(query_t, engine)
     
     collision_data_t.to_csv('includes/outputs/tables/table5.csv')
+
+    # close database connection
+    engine.dispose()    
+    
     # inform the processing results
     print("Question#5 task was processed succesfully.")
