@@ -3,4 +3,6 @@
 *.pbix
 *.txt
 gokce-visualization.py
+gokce-visualization(updated_20250105).py
 *.ipynb
+*.pyc
