@@ -63,81 +63,10 @@ def collisionvehicle():
 
 
 
-    query_t = "WITH classified_vehicle_types AS (\
-                SELECT \
-                    CASE\
-                        WHEN LOWER(vehicle_type_code1) LIKE '%suv%' OR LOWER(vehicle_type_code1) LIKE '%wagon%' THEN 'SUV'\
-                        WHEN LOWER(vehicle_type_code1) LIKE '%sedan%' THEN 'Sedan'\
-                        WHEN LOWER(vehicle_type_code1) LIKE '%truck%' THEN 'Truck'\
-                        WHEN LOWER(vehicle_type_code1) LIKE '%bus%' THEN 'Bus'\
-                        WHEN LOWER(vehicle_type_code1) LIKE '%bike%' OR LOWER(vehicle_type_code1) LIKE '%e-bike%' THEN 'Bike'\
-                        WHEN LOWER(vehicle_type_code1) LIKE '%scooter%' THEN 'Scooter'\
-                        WHEN vehicle_type_code1 IS NOT NULL THEN 'Other'\
-                        ELSE 'Unknown'\
-                    END AS vehicle_type\
-                FROM collisions\
-                UNION ALL\
-                SELECT \
-                    CASE\
-                        WHEN LOWER(vehicle_type_code2) LIKE '%suv%' OR LOWER(vehicle_type_code2) LIKE '%wagon%' THEN 'SUV'\
-                        WHEN LOWER(vehicle_type_code2) LIKE '%sedan%' THEN 'Sedan'\
-                        WHEN LOWER(vehicle_type_code2) LIKE '%truck%' THEN 'Truck'\
-                        WHEN LOWER(vehicle_type_code2) LIKE '%bus%' THEN 'Bus'\
-                        WHEN LOWER(vehicle_type_code2) LIKE '%bike%' OR LOWER(vehicle_type_code2) LIKE '%e-bike%' THEN 'Bike'\
-                        WHEN LOWER(vehicle_type_code2) LIKE '%scooter%' THEN 'Scooter'\
-                        WHEN vehicle_type_code2 IS NOT NULL THEN 'Other'\
-                        ELSE 'Unknown'\
-                    END AS vehicle_type\
-                FROM collisions\
-                UNION ALL\
-                SELECT \
-                    CASE\
-                        WHEN LOWER(vehicle_type_code_3) LIKE '%suv%' OR LOWER(vehicle_type_code_3) LIKE '%wagon%' THEN 'SUV'\
-                        WHEN LOWER(vehicle_type_code_3) LIKE '%sedan%' THEN 'Sedan'\
-                        WHEN LOWER(vehicle_type_code_3) LIKE '%truck%' THEN 'Truck'\
-                        WHEN LOWER(vehicle_type_code_3) LIKE '%bus%' THEN 'Bus'\
-                        WHEN LOWER(vehicle_type_code_3) LIKE '%bike%' OR LOWER(vehicle_type_code_3) LIKE '%e-bike%' THEN 'Bike'\
-                        WHEN LOWER(vehicle_type_code_3) LIKE '%scooter%' THEN 'Scooter'\
-                        WHEN vehicle_type_code_3 IS NOT NULL THEN 'Other'\
-                        ELSE 'Unknown'\
-                    END AS vehicle_type\
-                FROM collisions\
-                UNION ALL\
-                SELECT \
-                    CASE\
-                        WHEN LOWER(vehicle_type_code_4) LIKE '%suv%' OR LOWER(vehicle_type_code_4) LIKE '%wagon%' THEN 'SUV'\
-                        WHEN LOWER(vehicle_type_code_4) LIKE '%sedan%' THEN 'Sedan'\
-                        WHEN LOWER(vehicle_type_code_4) LIKE '%truck%' THEN 'Truck'\
-                        WHEN LOWER(vehicle_type_code_4) LIKE '%bus%' THEN 'Bus'\
-                        WHEN LOWER(vehicle_type_code_4) LIKE '%bike%' OR LOWER(vehicle_type_code_4) LIKE '%e-bike%' THEN 'Bike'\
-                        WHEN LOWER(vehicle_type_code_4) LIKE '%scooter%' THEN 'Scooter'\
-                        WHEN vehicle_type_code_4 IS NOT NULL THEN 'Other'\
-                        ELSE 'Unknown'\
-                    END AS vehicle_type\
-                FROM collisions\
-                UNION ALL\
-                SELECT \
-                    CASE\
-                        WHEN LOWER(vehicle_type_code_5) LIKE '%suv%' OR LOWER(vehicle_type_code_5) LIKE '%wagon%' THEN 'SUV'\
-                        WHEN LOWER(vehicle_type_code_5) LIKE '%sedan%' THEN 'Sedan'\
-                        WHEN LOWER(vehicle_type_code_5) LIKE '%truck%' THEN 'Truck'\
-                        WHEN LOWER(vehicle_type_code_5) LIKE '%bus%' THEN 'Bus'\
-                        WHEN LOWER(vehicle_type_code_5) LIKE '%bike%' OR LOWER(vehicle_type_code_5) LIKE '%e-bike%' THEN 'Bike'\
-                        WHEN LOWER(vehicle_type_code_5) LIKE '%scooter%' THEN 'Scooter'\
-                        WHEN vehicle_type_code_5 IS NOT NULL THEN 'Other'\
-                        ELSE 'Unknown'\
-                    END AS vehicle_type\
-                FROM collisions\
-            )\
-            SELECT vehicle_type, COUNT(*) AS type_count\
-            FROM classified_vehicle_types\
-            WHERE vehicle_type <> 'Unknown'\
-            GROUP BY vehicle_type\
-            ORDER BY type_count DESC;\
-            "
-    collision_data_t = pd.read_sql_query(query_t, engine)
+    #query_t = f"""SELECT CASE WHEN LOWER(mv.vehicletypecode) LIKE '%suv%' OR LOWER(mv.vehicletypecode) LIKE '%wagon%' THEN 'SUV' WHEN LOWER(mv.vehicletypecode) LIKE '%sedan%' THEN 'Sedan' WHEN LOWER(mv.vehicletypecode) LIKE '%truck%' THEN 'Truck' WHEN LOWER(mv.vehicletypecode) LIKE '%bus%' THEN 'Bus' WHEN LOWER(mv.vehicletypecode) LIKE '%e-bike%' OR LOWER(mv.vehicletypecode) LIKE '%bike%' THEN 'Bike' WHEN LOWER(mv.vehicletypecode) LIKE '%scooter%' THEN 'Scooter' ELSE 'Other' END AS vehicle_category,COUNT(*) AS frequency FROM ( SELECT vehicle_type_code1 AS vehicletypecode FROM collisions UNION ALL SELECT vehicle_type_code2 AS vehicletypecode FROM collisions UNION ALL SELECT vehicle_type_code_3 AS vehicletypecode FROM collisions UNION ALL SELECT vehicle_type_code_4 AS vehicletypecode FROM collisions UNION ALL SELECT vehicle_type_code_5 AS vehicletypecode FROM collisions) mv WHERE mv.vehicletypecode IS NOT NULL GROUP BY CASE WHEN LOWER(mv.vehicletypecode) LIKE '%suv%' OR LOWER(mv.vehicletypecode) LIKE '%wagon%' THEN 'SUV' WHEN LOWER(mv.vehicletypecode) LIKE '%sedan%' THEN 'Sedan' WHEN LOWER(mv.vehicletypecode) LIKE '%truck%' THEN 'Truck' WHEN LOWER(mv.vehicletypecode) LIKE '%bus%' THEN 'Bus' WHEN LOWER(mv.vehicletypecode) LIKE '%e-bike%' OR LOWER(mv.vehicletypecode) LIKE '%bike%' THEN 'Bike' WHEN LOWER(mv.vehicletypecode) LIKE '%scooter%' THEN 'Scooter' ELSE 'Other' END ORDER BY frequency DESC LIMIT 10;"""
+    #collision_data_t = pd.read_sql_query(query_t, engine)
     
-    collision_data_t.to_csv('includes/outputs/tables/table2.csv')
+    #collision_data_t.to_csv('includes/outputs/tables/table2.csv')
 
     # close database connection
     engine.dispose()

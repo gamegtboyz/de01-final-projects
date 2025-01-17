@@ -77,11 +77,11 @@ def casualityrate():
     plt.savefig("includes/outputs/figures/4_vehicle_casualty_rates_grouped.svg", format="svg")
 
 
-
+    """
     query_t = "WITH classified_vehicle_types AS (\
                 SELECT\
                     collision_id,\
-                    (number_of_persons_injured + number_of_persons_killed) AS total_casualties,\
+                    total_casualties,\
                     CASE\
                         WHEN LOWER(vehicle_type_code1) LIKE '%suv%' OR LOWER(vehicle_type_code1) LIKE '%wagon%' THEN 'SUV'\
                         WHEN LOWER(vehicle_type_code1) LIKE '%sedan%' THEN 'Sedan'\
@@ -92,11 +92,15 @@ def casualityrate():
                         WHEN vehicle_type_code1 IS NOT NULL THEN 'Other'\
                         ELSE 'Unknown'\
                     END AS vehicle_type\
-                FROM collisions\
+                FROM (\
+                    SELECT *,\
+                        (number_of_persons_injured + number_of_persons_killed) AS total_casualties\
+                    FROM collisions\
+                )\
                 UNION ALL\
                 SELECT\
                     collision_id,\
-                    (number_of_persons_injured + number_of_persons_killed) AS total_casualties,\
+                    total_casualties,\
                     CASE\
                         WHEN LOWER(vehicle_type_code2) LIKE '%suv%' OR LOWER(vehicle_type_code2) LIKE '%wagon%' THEN 'SUV'\
                         WHEN LOWER(vehicle_type_code2) LIKE '%sedan%' THEN 'Sedan'\
@@ -107,11 +111,15 @@ def casualityrate():
                         WHEN vehicle_type_code2 IS NOT NULL THEN 'Other'\
                         ELSE 'Unknown'\
                     END AS vehicle_type\
-                FROM collisions\
+                FROM (\
+                    SELECT *,\
+                        (number_of_persons_injured + number_of_persons_killed) AS total_casualties\
+                    FROM collisions\
+                )\
                 UNION ALL\
                 SELECT\
                     collision_id,\
-                    (number_of_persons_injured + number_of_persons_killed) AS total_casualties,\
+                    total_casualties,\
                     CASE\
                         WHEN LOWER(vehicle_type_code_3) LIKE '%suv%' OR LOWER(vehicle_type_code_3) LIKE '%wagon%' THEN 'SUV'\
                         WHEN LOWER(vehicle_type_code_3) LIKE '%sedan%' THEN 'Sedan'\
@@ -122,11 +130,15 @@ def casualityrate():
                         WHEN vehicle_type_code_3 IS NOT NULL THEN 'Other'\
                         ELSE 'Unknown'\
                     END AS vehicle_type\
-                FROM collisions\
+                FROM (\
+                    SELECT *,\
+                        (number_of_persons_injured + number_of_persons_killed) AS total_casualties\
+                    FROM collisions\
+                )\
                 UNION ALL\
                 SELECT\
                     collision_id,\
-                    (number_of_persons_injured + number_of_persons_killed) AS total_casualties,\
+                    total_casualties,\
                     CASE\
                         WHEN LOWER(vehicle_type_code_4) LIKE '%suv%' OR LOWER(vehicle_type_code_4) LIKE '%wagon%' THEN 'SUV'\
                         WHEN LOWER(vehicle_type_code_4) LIKE '%sedan%' THEN 'Sedan'\
@@ -137,11 +149,15 @@ def casualityrate():
                         WHEN vehicle_type_code_4 IS NOT NULL THEN 'Other'\
                         ELSE 'Unknown'\
                     END AS vehicle_type\
-                FROM collisions\
+                FROM (\
+                    SELECT *,\
+                        (number_of_persons_injured + number_of_persons_killed) AS total_casualties\
+                    FROM collisions\
+                )\
                 UNION ALL\
                 SELECT\
                     collision_id,\
-                    (number_of_persons_injured + number_of_persons_killed) AS total_casualties,\
+                    total_casualties,\
                     CASE\
                         WHEN LOWER(vehicle_type_code_5) LIKE '%suv%' OR LOWER(vehicle_type_code_5) LIKE '%wagon%' THEN 'SUV'\
                         WHEN LOWER(vehicle_type_code_5) LIKE '%sedan%' THEN 'Sedan'\
@@ -152,7 +168,11 @@ def casualityrate():
                         WHEN vehicle_type_code_5 IS NOT NULL THEN 'Other'\
                         ELSE 'Unknown'\
                     END AS vehicle_type\
-                FROM collisions\
+                FROM (\
+                    SELECT *,\
+                        (number_of_persons_injured + number_of_persons_killed) AS total_casualties\
+                    FROM collisions\
+                )\
             )\
             SELECT\
                 vehicle_type,\
@@ -162,12 +182,12 @@ def casualityrate():
             FROM classified_vehicle_types\
             WHERE vehicle_type <> 'Unknown'\
             GROUP BY vehicle_type\
-            ORDER BY casualties_per_1000_collisions DESC;"
-    
+            ORDER BY casualties_per_1000_collisions DESC;"    
     
     collision_data_t = pd.read_sql_query(query_t, engine)
     
     collision_data_t.to_csv('includes/outputs/tables/table4.csv')
+    """
 
     # close database connection
     engine.dispose()
